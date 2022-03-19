@@ -1,13 +1,17 @@
 package dev.jefferson.userapi.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Service;
 
 import dev.jefferson.userapi.dto.UserRequest;
 import dev.jefferson.userapi.dto.UserResponse;
+import dev.jefferson.userapi.exception.ResourceAlreadyRegisteredException;
 import dev.jefferson.userapi.exception.ResourceNotFoundException;
 import dev.jefferson.userapi.model.User;
 import dev.jefferson.userapi.repository.UserRepository;
@@ -35,8 +39,9 @@ public class UserService {
 
 
 	public UserResponse create(UserRequest dto) {
-		verityIfResourceAlreadyExists(dto);
-		User user = repository.save(dto.convertToEntity());
+		User user = dto.convertToEntity();
+		verifyIfResourceAlreadyExists(user);
+		user = repository.save(user);
 		return user.convertToResponse();
 	}
 	
@@ -61,15 +66,35 @@ public class UserService {
 	}
 	
 	
+	public UserResponse update(UUID id, @Valid UserRequest dto) {
+		User user = findByIdMethod(id);
+		user.setNome(dto.getNome());
+		user.setCpf(dto.getCpf());
+		user.setEmail(dto.getEmail());
+		user.setEndereco(dto.getEndereco());
+		user.setTelefone(dto.getTelefone());
+		verifyIfResourceAlreadyExists(user);
+		user = repository.save(user);
+		return user.convertToResponse();
+	}
+	
+	
 	private User findByIdMethod(UUID uuid) {
 		return repository.findById(uuid)
 				.orElseThrow(() -> new ResourceNotFoundException("Entidade não encontrada com o ID " + uuid));
 	}
 	
 	
-	private void verityIfResourceAlreadyExists(UserRequest dto) {
-		//TODO: Regra para verificar se já é cadastrado
+	private void verifyIfResourceAlreadyExists(User user) {
+		Optional<User> optNome = repository.findByNomeIgnoreCase(user.getNome());
+		if(optNome.isPresent() && !optNome.get().equals(user)) {
+			throw new ResourceAlreadyRegisteredException("Já existe um usuário com este nome cadastrado");
+		}
+		
+		Optional<User> optCpf = repository.findByCpf(user.getCpf());
+		if(optCpf.isPresent() && !optCpf.get().equals(user)) {
+			throw new ResourceAlreadyRegisteredException("Já existe um usuário com este CPF cadastrado");
+		}
 	}
-
 
 }

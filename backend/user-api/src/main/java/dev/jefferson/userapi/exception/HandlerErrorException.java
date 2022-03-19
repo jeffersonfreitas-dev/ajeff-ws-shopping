@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -20,6 +22,13 @@ public class HandlerErrorException {
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ApiError handlerResourceNotFoundException(ResourceNotFoundException ex) {
 		return new ApiError(HttpStatus.NOT_FOUND, ex.getMessage(), new Date());
+	}
+
+	
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(ResourceAlreadyRegisteredException.class)
+	public ApiError handlerResourceAlreadyRegisteredException(ResourceAlreadyRegisteredException ex) {
+		return new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), new Date());
 	}
 
 	
@@ -45,5 +54,12 @@ public class HandlerErrorException {
 		}
 		
 		return new ApiError(HttpStatus.BAD_REQUEST, message, new Date(), errors);
+	}
+
+	
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ApiError handleConstraintViolationExceptionException(ConstraintViolationException ex) {
+		return new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), new Date());
 	}
 }

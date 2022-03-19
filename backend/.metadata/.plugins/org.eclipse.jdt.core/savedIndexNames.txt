@@ -15,6 +15,7 @@ INDEX VERSION 1.131+E:\ESTUDOS\PROJETOS\ajeff-ws-shopping\backend\.metadata\.plu
 263667840.index
 434632455.index
 1787998847.index
+2011298125.index
 2278481035.index
 2307299747.index
 3721768412.index
@@ -28,6 +29,7 @@ INDEX VERSION 1.131+E:\ESTUDOS\PROJETOS\ajeff-ws-shopping\backend\.metadata\.plu
 3109284015.index
 99434569.index
 3395972558.index
+442475553.index
 2926929412.index
 3489417134.index
 468154121.index

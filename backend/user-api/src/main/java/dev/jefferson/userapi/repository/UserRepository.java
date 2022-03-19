@@ -18,5 +18,6 @@ public interface UserRepository extends JpaRepository<User, UUID>{
 	@Query("select u from User u order by u.nome")
 	List<User> findAllOrderByNome();
 
-	Optional<User> findByNomeIgnoreCaseOrCpf(String nome, String cpf);
+	Optional<User> findByNomeIgnoreCase(String nome);
+
 }

@@ -22,7 +22,7 @@ public class User {
 	
 	@Id
 	@Type(type = "uuid-char")
-	private UUID uuid;
+	private UUID id;
 	
 	@Column(name = "nome", unique = true,  nullable = false, length = 100)
 	private	String	nome;
@@ -43,7 +43,7 @@ public class User {
 	private	LocalDate	dataCadastro;
 	
 	public User (String nome, String cpf, String endereco, String email, String telefone) {
-		this.uuid = UUID.randomUUID();
+		this.id = UUID.randomUUID();
 		this.nome = nome;
 		this.cpf = cpf;
 		this.endereco = endereco;
@@ -60,7 +60,7 @@ public class User {
 	
 	public UserResponse convertToResponse() {
 		return new UserResponse
-				(this.uuid, this.nome, this.cpf, this.endereco, this.email, this.telefone, this.dataCadastro);
+				(this.id, this.nome, this.cpf, this.endereco, this.email, this.telefone, this.dataCadastro);
 	}
 
 }
