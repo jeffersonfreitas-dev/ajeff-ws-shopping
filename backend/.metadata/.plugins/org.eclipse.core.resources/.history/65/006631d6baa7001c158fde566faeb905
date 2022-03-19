@@ -1,0 +1,50 @@
+package dev.jefferson.userapi.model;
+
+import java.time.LocalDate;
+import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "users")
+@Data @NoArgsConstructor
+public class User {
+	
+	@Id
+	@Type(type = "uuid-char")
+	private UUID uuid;
+	
+	@Column(name = "nome", unique = true,  nullable = false, length = 100)
+	private	String	nome;
+	
+	@Column(name = "cpf", unique = true, nullable = false, length = 15)
+	private	String	cpf;
+	
+	@Column(name = "endereco", length = 100)
+	private	String	endereco;
+	
+	@Column(name = "email", length = 100)
+	private	String	email;
+	
+	@Column(name = "telefone", length = 20)
+	private	String	telefone;
+	
+	@Column(name = "cadastro")
+	private	LocalDate	dataCadastro;
+
+	
+	@PrePersist
+	private void setDataCadastro() {
+		this.dataCadastro = LocalDate.now();
+	}
+
+}

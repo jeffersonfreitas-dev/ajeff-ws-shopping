@@ -1,0 +1,5 @@
+package dev.jefferson.userapi.dto;
+
+public class UserRequest {
+
+}

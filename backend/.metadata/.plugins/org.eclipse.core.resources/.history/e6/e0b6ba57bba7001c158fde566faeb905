@@ -1,0 +1,29 @@
+package dev.jefferson.userapi.dto;
+
+import java.time.LocalDate;
+import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
+
+import org.hibernate.annotations.Type;
+
+import dev.jefferson.userapi.model.User;
+import lombok.Data;
+
+@Data
+public class UserResponse {
+	
+	private UUID uuid;
+	private	String	nome;
+	private	String	cpf;
+	private	String	endereco;
+	private	String	email;
+	private	String	telefone;
+	private	LocalDate	dataCadastro;
+	
+	public User convertToEntity() {
+		return new User()
+	}
+
+}

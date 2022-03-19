@@ -1,0 +1,13 @@
+package dev.jefferson.userapi.dto;
+
+import lombok.Data;
+
+@Data
+public class UserRequest {
+
+	private	String	nome;
+	private	String	cpf;
+	private	String	endereco;
+	private	String	email;
+	private	String	telefone;
+}

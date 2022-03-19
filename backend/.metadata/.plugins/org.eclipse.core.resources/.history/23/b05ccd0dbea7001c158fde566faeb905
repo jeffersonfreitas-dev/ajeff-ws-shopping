@@ -1,0 +1,21 @@
+package dev.jefferson.userapi.dto;
+
+import dev.jefferson.userapi.model.User;
+import lombok.Data;
+
+@Data
+public class UserRequest {
+
+	@NotB
+	private	String	nome;
+	private	String	cpf;
+	private	String	endereco;
+	private	String	email;
+	private	String	telefone;
+	
+	public User convertToEntity() {
+		return new User(this.nome, this.cpf, this.endereco, this.email, this.telefone);
+	}
+	
+	
+}

@@ -1,0 +1,48 @@
+package dev.jefferson.userapi.service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
+import dev.jefferson.userapi.dto.UserRequest;
+import dev.jefferson.userapi.dto.UserResponse;
+import dev.jefferson.userapi.exception.ResourceNotFoundException;
+import dev.jefferson.userapi.model.User;
+import dev.jefferson.userapi.repository.UserRepository;
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
+public class UserService {
+
+	private final UserRepository repository;
+	
+	
+	public List<UserResponse> getAll(){
+		List<User> users = repository.findAllOrderByNome();
+		return users.stream()
+				.map(User::convertToResponse)
+				.collect(Collectors.toList());
+	}
+	
+	
+	public UserResponse findById(UUID uuid) {
+		User user = repository.findById(uuid)
+				.orElseThrow(() -> new ResourceNotFoundException("Entidade não encontrada com o ID " + uuid));
+		return user.convertToResponse();
+	}
+	
+	
+	public UserResponse create(UserRequest dto) {
+		verifyIfAlreadyRegistered(dto.getNome(), dto.getCpf());
+	}
+
+
+	private void verifyIfAlreadyRegistered(String nome, String cpf) {
+		Optional<User> opt = repository.findByNomeIgnoreCaseOrCpf(nome, cpf);
+		
+	}
+}

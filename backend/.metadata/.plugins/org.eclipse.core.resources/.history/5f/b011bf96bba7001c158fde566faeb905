@@ -1,0 +1,19 @@
+package dev.jefferson.userapi.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import dev.jefferson.userapi.repository.UserRepository;
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
+public class UserService {
+
+	private final UserRepository repository;
+	
+	public List<UserResponse> getAll(){
+		
+	}
+}

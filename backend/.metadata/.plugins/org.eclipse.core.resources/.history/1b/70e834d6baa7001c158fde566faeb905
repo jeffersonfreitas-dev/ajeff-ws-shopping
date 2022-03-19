@@ -1,0 +1,5 @@
+package dev.jefferson.userapi.service;
+
+public class UserService {
+
+}

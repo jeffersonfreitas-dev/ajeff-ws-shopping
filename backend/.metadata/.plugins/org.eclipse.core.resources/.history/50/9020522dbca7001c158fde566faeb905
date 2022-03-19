@@ -1,0 +1,31 @@
+package dev.jefferson.userapi.service;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
+import dev.jefferson.userapi.dto.UserResponse;
+import dev.jefferson.userapi.model.User;
+import dev.jefferson.userapi.repository.UserRepository;
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
+public class UserService {
+
+	private final UserRepository repository;
+	
+	
+	public List<UserResponse> getAll(){
+		List<User> users = repository.findAllOrderByNome();
+		return users.stream()
+				.map(User::convertToResponse)
+				.collect(Collectors.toList());
+	}
+	
+	public UserResponse findById(UUID uuid) {
+		
+	}
+}

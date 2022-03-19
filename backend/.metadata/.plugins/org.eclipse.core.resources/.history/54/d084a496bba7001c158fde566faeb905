@@ -1,0 +1,15 @@
+package dev.jefferson.userapi.repository;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import dev.jefferson.userapi.model.User;
+
+public interface UserRepository extends PagingAndSortingRepository<User, UUID>{
+
+	User findByCpf(String cpf);
+	
+	List<User> queryByNomeLike(String nome);
+}

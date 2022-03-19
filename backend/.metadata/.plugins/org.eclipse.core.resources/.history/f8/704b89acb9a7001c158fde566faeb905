@@ -1,0 +1,5 @@
+package dev.jefferson.userapi.repository;
+
+public interface UserRepository {
+
+}
