@@ -1,0 +1,2 @@
+INDEX VERSION 1.131+E:\ESTUDOS\PROJETOS\ajeff-ws-shopping\backend\.metadata\.plugins\org.eclipse.jdt.core
+2422777910.index
