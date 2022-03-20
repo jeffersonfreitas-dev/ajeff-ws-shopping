@@ -71,7 +71,7 @@ public class CategoryService {
 	
 	private Category findByIdMethod(UUID uuid) {
 		return repository.findById(uuid)
-				.orElseThrow(() -> new ResourceNotFoundException("Entidade não encontrada com o ID " + uuid));
+				.orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada com o ID " + uuid));
 	}
 	
 	

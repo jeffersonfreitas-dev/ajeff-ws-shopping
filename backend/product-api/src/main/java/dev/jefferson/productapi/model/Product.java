@@ -32,7 +32,7 @@ public class Product {
 	
 	private	BigDecimal	preco;
 	
-	@Column(name = "descricao", unique = true,  nullable = false, length = 100)
+	@Column(name = "descricao",  nullable = false, length = 100)
 	private	String	descricao;
 	
 	@Column(name = "identificacao", unique = true,  nullable = false, length = 100)

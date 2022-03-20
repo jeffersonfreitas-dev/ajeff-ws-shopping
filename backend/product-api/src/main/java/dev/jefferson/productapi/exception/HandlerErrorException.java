@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -24,6 +25,14 @@ public class HandlerErrorException {
 		return new ApiError(HttpStatus.NOT_FOUND, ex.getMessage(), new Date());
 	}
 
+	
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ApiError handlerHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+		String msg = "Erro ao converter o UUID. Verifique se o valor informado está correto";
+		return new ApiError(HttpStatus.BAD_REQUEST, msg, new Date());
+	}
+	
 	
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(ResourceAlreadyRegisteredException.class)
