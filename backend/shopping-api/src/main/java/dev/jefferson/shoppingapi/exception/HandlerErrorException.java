@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import dev.jefferson.shoppingapi.service.ResourceNotAvailableEException;
+
 @RestControllerAdvice
 public class HandlerErrorException {
 	
@@ -23,6 +25,13 @@ public class HandlerErrorException {
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ApiError handlerResourceNotFoundException(ResourceNotFoundException ex) {
 		return new ApiError(HttpStatus.NOT_FOUND, ex.getMessage(), new Date());
+	}
+
+	
+	@ResponseStatus(HttpStatus.REQUEST_TIMEOUT)
+	@ExceptionHandler(ResourceNotAvailableEException.class)
+	public ApiError handlerResourceNotAvailableException(ResourceNotAvailableEException ex) {
+		return new ApiError(HttpStatus.REQUEST_TIMEOUT, ex.getMessage(), new Date());
 	}
 
 	

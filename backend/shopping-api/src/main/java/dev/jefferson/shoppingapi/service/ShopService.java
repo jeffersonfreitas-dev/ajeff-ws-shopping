@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import dev.jefferson.shoppingapi.dto.ItemRequest;
+import dev.jefferson.shoppingapi.dto.ProductDTO;
 import dev.jefferson.shoppingapi.dto.ShopRequest;
 import dev.jefferson.shoppingapi.dto.ShopResponse;
 import dev.jefferson.shoppingapi.exception.ResourceNotFoundException;
@@ -21,6 +23,8 @@ public class ShopService {
 
 
 	private final ShopRepository repository;
+	private final UserService userService;
+	private final ProductService productService;
 	
 	
 	public List<ShopResponse> getAll(){
@@ -45,12 +49,14 @@ public class ShopService {
 
 
 	public ShopResponse create(ShopRequest dto) {
+		userService.getUserById(dto.getUsuario());
+		validarProdutosDaCompra(dto);
 		Shop shop = dto.convertToEntity();
 		shop = repository.save(shop);
 		return shop.convertToResponse();
 	}
 	
-	
+
 	public void deleteById(UUID uuid) {
 		Shop shop = findByIdMethod(uuid);
 		repository.delete(shop);
@@ -67,6 +73,17 @@ public class ShopService {
 	private Shop findByIdMethod(UUID uuid) {
 		return repository.findById(uuid)
 				.orElseThrow(() -> new ResourceNotFoundException("Compra não encontrada com o ID " + uuid));
+	}
+	
+	
+	private void validarProdutosDaCompra(ShopRequest dto) {
+		for(ItemRequest i : dto.getItems()) {
+			ProductDTO prod = productService.getProductByIdentifier(i.getProduto());
+			if(prod == null) {
+				throw new ResourceNotFoundException("Produto não localizado com a identificação " + i.getProduto());
+			}
+		}
+		
 	}
 	
 }

@@ -44,7 +44,7 @@ public class ProductController {
 	}
 
 	
-	@GetMapping("/{identificacao}")
+	@GetMapping("/id/{identificacao}")
 	@ResponseStatus(HttpStatus.OK)
 	public ProductResponse getProductByIdentification(@PathVariable String identificacao){
 		return service.getProductByIdentification(identificacao);
