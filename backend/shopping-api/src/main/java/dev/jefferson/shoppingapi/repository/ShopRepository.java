@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import dev.jefferson.shoppingapi.model.Shop;
 
-public interface ShopRepository extends JpaRepository<Shop, UUID>{
+public interface ShopRepository extends JpaRepository<Shop, UUID>, ReportRepository{
 
 	@Query("select s from Shop s order by s.data")
 	List<Shop> findAllOrderByData();

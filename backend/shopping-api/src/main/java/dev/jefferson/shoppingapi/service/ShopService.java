@@ -1,5 +1,7 @@
 package dev.jefferson.shoppingapi.service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -53,6 +55,13 @@ public class ShopService {
 		Shop shop = findByIdMethod(uuid);
 		repository.delete(shop);
 	}
+	
+	
+	public List<ShopResponse> getShopsByFilter(LocalDate inicio, LocalDate fim, BigDecimal minimo){
+		List<Shop> shops = repository.getShopByFilters(inicio, fim, minimo);
+		return shops.stream().map(Shop::convertToResponse).collect(Collectors.toList());
+	}
+	
 	
 	
 	private Shop findByIdMethod(UUID uuid) {
