@@ -2,6 +2,8 @@ package dev.jefferson.shoppingapi.service;
 
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -14,12 +16,14 @@ import dev.jefferson.shoppingapi.exception.ResourceNotFoundException;
 @Service
 public class UserService {
 	
-	private final static String URL_SERVICO = "http://localhost:8080/api/v1/users/";
+	@Autowired
+	private Environment env;
 	
 	public UserDTO getUserById(UUID uuid) {
+		String url = env.getProperty("shopping-api.url.servico.usuario") + uuid;
+
 		try {
 			RestTemplate template = new RestTemplate();
-			String url = URL_SERVICO + uuid;
 			ResponseEntity<UserDTO> result = template.getForEntity(url, UserDTO.class);
 			return result.getBody();
 		} catch (HttpClientErrorException.NotFound e) {
