@@ -14,6 +14,7 @@ import dev.jefferson.productapi.dto.ProductResponse;
 import dev.jefferson.productapi.exception.ResourceAlreadyRegisteredException;
 import dev.jefferson.productapi.exception.ResourceNotFoundException;
 import dev.jefferson.productapi.model.Product;
+import dev.jefferson.productapi.repository.CategoryRepository;
 import dev.jefferson.productapi.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 
@@ -23,6 +24,7 @@ public class ProductService {
 
 
 	private final ProductRepository repository;
+	private final CategoryRepository categoryRepository;
 	
 	
 	public List<ProductResponse> getAll(){
@@ -71,7 +73,7 @@ public class ProductService {
 		Product product = findByIdMethod(id);
 		product.setNome(dto.getNome());
 		product.setDescricao(dto.getDescricao());
-		product.setCategory(dto.getCategoryRequest().convertToEntity());
+		product.setCategory(categoryRepository.findById(dto.getIdCategory()).get());
 		product.setIdentificacao(dto.getIdentificacao());
 		product.setPreco(dto.getPreco());
 		verifyIfResourceAlreadyExists(product);

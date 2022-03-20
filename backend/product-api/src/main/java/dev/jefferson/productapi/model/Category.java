@@ -10,12 +10,14 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 import dev.jefferson.productapi.dto.CategoryResponse;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "categories")
 @Data @NoArgsConstructor
+@AllArgsConstructor
 public class Category {
 	
 	@Id
